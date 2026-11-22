@@ -1,191 +1,80 @@
 (function () {
   'use strict';
-
   gsap.registerPlugin(ScrollTrigger);
 
-  // Header
   const header = document.getElementById('header');
   ScrollTrigger.create({
-    start: 'top -40',
-    onUpdate: (self) => {
-      header.classList.toggle('scrolled', self.scroll() > 40);
-    }
+    start: 'top -30',
+    onUpdate: (self) => header.classList.toggle('scrolled', self.scroll() > 30)
   });
 
-  // Hero entrance
-  const heroTl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+  // Hero
+  gsap.timeline({ defaults: { ease: 'power3.out' } })
+    .to('.hero__label', { opacity: 1, y: 0, duration: 0.7, delay: 0.15 })
+    .to('.hero__title', { opacity: 1, y: 0, duration: 0.9 }, '-=0.35')
+    .to('.hero__row', { opacity: 1, y: 0, duration: 0.8 }, '-=0.45');
 
-  heroTl
-    .to('.hero__eyebrow', { opacity: 1, y: 0, duration: 0.8, delay: 0.2 })
-    .to('.hero__title .line > span', {
-      y: 0,
-      opacity: 1,
-      duration: 1.1,
-      stagger: 0.12
-    }, '-=0.4')
-    .to('.hero__bottom', { opacity: 1, y: 0, duration: 0.9 }, '-=0.5');
-
-  // Hero parallax
-  gsap.to('.hero__img', {
-    yPercent: 25,
+  gsap.to('.hero__bg', {
+    yPercent: 18,
     ease: 'none',
-    scrollTrigger: {
-      trigger: '.hero',
-      start: 'top top',
-      end: 'bottom top',
-      scrub: true
-    }
+    scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true }
   });
 
-  // Count-up stats
+  // Counts
   document.querySelectorAll('[data-count]').forEach((el) => {
-    const target = parseInt(el.dataset.count, 10);
+    const target = +el.dataset.count;
     ScrollTrigger.create({
       trigger: el,
-      start: 'top 85%',
+      start: 'top 88%',
       once: true,
-      onEnter: () => {
-        gsap.to(el, {
-          innerText: target,
-          duration: 1.8,
-          ease: 'power2.out',
-          snap: { innerText: 1 },
-          onUpdate: function () {
-            el.innerText = Math.round(this.targets()[0].innerText);
-          }
-        });
-      }
+      onEnter: () => gsap.to(el, {
+        innerText: target,
+        duration: 1.6,
+        ease: 'power2.out',
+        snap: { innerText: 1 },
+        onUpdate() { el.innerText = Math.round(+el.innerText); }
+      })
     });
   });
 
-  // About section
-  gsap.from('.about__photo-wrap', {
-    y: 80,
-    opacity: 0,
-    duration: 1.2,
-    ease: 'power3.out',
-    scrollTrigger: {
-      trigger: '.about',
-      start: 'top 70%'
-    }
-  });
-
-  gsap.from('.about__award', {
-    y: 60,
-    opacity: 0,
-    duration: 1,
-    delay: 0.25,
-    ease: 'power3.out',
-    scrollTrigger: {
-      trigger: '.about',
-      start: 'top 70%'
-    }
-  });
-
-  gsap.from('.about__text > *', {
-    y: 40,
-    opacity: 0,
-    duration: 0.9,
-    stagger: 0.1,
-    ease: 'power3.out',
-    scrollTrigger: {
-      trigger: '.about__text',
-      start: 'top 75%'
-    }
-  });
-
-  // Services lines + items
-  gsap.utils.toArray('.service').forEach((item, i) => {
-    gsap.from(item, {
-      y: 50,
-      opacity: 0,
-      duration: 0.9,
+  // Sections
+  gsap.utils.toArray('.about__media, .about__content > *').forEach((el, i) => {
+    gsap.from(el, {
+      y: 36, opacity: 0, duration: 0.85, delay: i * 0.05,
       ease: 'power3.out',
-      scrollTrigger: {
-        trigger: item,
-        start: 'top 85%'
-      }
+      scrollTrigger: { trigger: '.about', start: 'top 75%' }
     });
-
-    const line = item.querySelector('.service__line');
-    if (line) {
-      gsap.to(line, {
-        width: '100%',
-        duration: 1.2,
-        ease: 'power2.inOut',
-        scrollTrigger: {
-          trigger: item,
-          start: 'top 80%'
-        }
-      });
-    }
   });
 
-  // Why cards
+  gsap.from('.service', {
+    y: 40, opacity: 0, duration: 0.8, stagger: 0.12, ease: 'power3.out',
+    scrollTrigger: { trigger: '.services__list', start: 'top 82%' }
+  });
+
   gsap.from('.why-card', {
-    y: 60,
-    opacity: 0,
-    duration: 0.9,
-    stagger: 0.1,
-    ease: 'power3.out',
-    scrollTrigger: {
-      trigger: '.why__grid',
-      start: 'top 80%'
-    }
+    y: 36, opacity: 0, duration: 0.75, stagger: 0.08, ease: 'power3.out',
+    scrollTrigger: { trigger: '.why__grid', start: 'top 82%' }
   });
 
-  // Cases
   gsap.from('.case', {
-    y: 70,
-    opacity: 0,
-    duration: 1,
-    stagger: 0.12,
-    ease: 'power3.out',
-    scrollTrigger: {
-      trigger: '.cases__grid',
-      start: 'top 80%'
-    }
+    y: 40, opacity: 0, duration: 0.8, stagger: 0.1, ease: 'power3.out',
+    scrollTrigger: { trigger: '.cases__grid', start: 'top 82%' }
   });
 
-  // Contact
-  gsap.from('.contact__left > *', {
-    y: 40,
-    opacity: 0,
-    duration: 0.9,
-    stagger: 0.1,
-    ease: 'power3.out',
-    scrollTrigger: {
-      trigger: '.contact',
-      start: 'top 75%'
-    }
+  gsap.from('.contact__info > *, .contact__form', {
+    y: 30, opacity: 0, duration: 0.8, stagger: 0.08, ease: 'power3.out',
+    scrollTrigger: { trigger: '.contact', start: 'top 78%' }
   });
 
-  gsap.from('.contact__form', {
-    y: 50,
-    opacity: 0,
-    duration: 1,
-    ease: 'power3.out',
-    scrollTrigger: {
-      trigger: '.contact',
-      start: 'top 75%'
-    }
-  });
-
-  // Form demo
   const form = document.getElementById('contact-form');
   if (form) {
     form.addEventListener('submit', (e) => {
       e.preventDefault();
       const btn = form.querySelector('button');
-      const span = btn.querySelector('span');
-      const original = span.textContent;
-      span.textContent = 'Отправлено ✓';
+      const t = btn.textContent;
+      btn.textContent = 'Отправлено ✓';
       btn.disabled = true;
-      setTimeout(() => {
-        span.textContent = original;
-        btn.disabled = false;
-        form.reset();
-      }, 2200);
+      setTimeout(() => { btn.textContent = t; btn.disabled = false; form.reset(); }, 2000);
     });
   }
 })();
