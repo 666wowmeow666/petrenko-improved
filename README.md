@@ -1,24 +1,26 @@
-# Petrenko Real Estate Consulting — Improved Landing
+# Petrenko Real Estate Consulting — Cinematic Landing
 
-Улучшенная версия сайта [petrenko.group](https://petrenko.group).
+Улучшенная кинематографичная версия [petrenko.group](https://petrenko.group).
 
-## Что сделано
+## Что внутри
 
-- Сохранена общая концепция и тёмный люксовый стиль
-- Исправлены слабые места оригинала
-- Добавлены плавные scroll-анимации (Intersection Observer)
-- Чистая семантическая вёрстка, современный CSS
-- Sticky-header, улучшенная типографика и иерархия
-- Адаптив под мобильные устройства
+- Тёмный люксовый стиль + золотой акцент
+- GSAP + ScrollTrigger: parallax, text reveals, stagger, count-up
+- Оригинальные фото (Роман + награда CREDO)
+- Полноэкранный hero с параллаксом
+- Плотные, живые секции без пустоты
+- Адаптив
 
-## Локальный запуск
-
-Откройте `index.html` в браузере или поднимите любой static server:
+## Локально
 
 ```bash
 npx serve .
 ```
 
-## Деплой
+## GitHub
 
-Проект готов к деплою на Vercel / Netlify / GitHub Pages.
+https://github.com/666wowmeow666/petrenko-improved
+
+## Vercel
+
+Импортируй репозиторий → Framework: Other → Deploy.
