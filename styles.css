@@ -130,3 +130,9 @@ ul{list-style:none}
   .footer__inner{flex-direction:column;gap:16px;text-align:center}
   .footer__links{justify-content:center}
 }
+
+/* Animation helpers */
+.about__media{overflow:hidden}
+.hero__label,.hero__title,.hero__row{will-change:transform,opacity}
+.case__img{will-change:transform}
+.btn,.nav-cta,.channel{will-change:transform}
